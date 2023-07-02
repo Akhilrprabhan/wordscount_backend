@@ -106,6 +106,21 @@ app.get('/word-counts', (req, res) => {
     });
 });
 
+// Define a route to delete the word count of a URL
+app.delete('/word-count/:id', (req, res) => {
+  const { id } = req.params;
+
+  WordCount.findByIdAndDelete(id)
+    .then(() => {
+      console.log(`Word count deleted: ${id}`);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error(`Error deleting word count: ${id}`, error);
+      res.sendStatus(500);
+    });
+});
+
 // Start the server
 const port = 5000;
 app.listen(port, () => {
